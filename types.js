@@ -26,7 +26,7 @@ export type SJColor = {|
   alpha: number,
 |};
 
-/*** Style  ***/
+/*** Style & Misc. ***/
 
 // You'll want to use values from sketch-constants for these.
 // This just prevents some mistakes.
@@ -43,9 +43,17 @@ const ResizingType = {
   PinToCorner: 1,
   ResizeObject: 2,
   FloatInPlace: 3
-}
+};
 */
 type ResizingType = 0 | 1 | 2 | 3;
+/*
+const LayerListExpandedType = {
+  Collapsed: 0,
+  ExpandedTemp: 1,
+  Expanded: 2,
+};
+*/
+type LayerListExpandedType = 0 | 1 | 2;
 
 export type SJBorder = {|
   _class: 'border',
@@ -96,43 +104,12 @@ export type SJStyle = {
 export type SJTextStyle = {|
   _class: 'textStyle',
   encodedAttributes: {
-    NSColor?: {
-      _archive: EncodedBase64BinaryPlist,
-    },
-    MSAttributedStringFontAttribute?: {
-      _archive: EncodedBase64BinaryPlist,
-    },
-    NSParagraphStyle?: {
-      _archive: EncodedBase64BinaryPlist,
-    },
-    NSKern?: number
+    NSColor: KeyValueArchive,
+    MSAttributedStringFontAttribute?: KeyValueArchive,
+    NSParagraphStyle?: KeyValueArchive,
+    NSKern: number
   }
 |};
-
-/*** Layers ***/
-
-type _SJLayerBase = {
-  name: string,
-  nameIsFixed: bool,
-
-  isFlippedHorizontal?: bool,
-  isFlippedVertical?: bool,
-  isLocked?: bool,
-  isVisible: bool,
-  // TODO: add enum here
-  layerListExpandedType?: number ,
-
-  layers?: SJLayer[],
-  style?: SJStyle,
-  // Rotation direction is backwards compared to Sketch UI
-  rotation?: number,
-  shouldBreakMaskChain?: bool,
-  // TODO: add enum here
-  resizingType?: ResizingType,
-  hasClickThrough?: bool,
-} & SJIDBase;
-
-export type SJLayer = SJTextLayer | SJGroupLayer | SJShapeGroupLayer | SJShapeLayer;
 
 type ExportOptions = {|
     _class: 'exportOptions',
@@ -141,6 +118,32 @@ type ExportOptions = {|
     layerOptions: number,
     shouldTrim: bool
 |};
+
+/*** Layers ***/
+
+type _SJLayerBase = {
+  // Layers have names; when they are not fixed, they are changed by the layer's string
+  name: string,
+  nameIsFixed: bool,
+
+  // It's important to make sure your layers are visible by including visible: true
+  isVisible: bool,
+  isLocked?: bool,
+  layerListExpandedType?: LayerListExpandedType,
+  hasClickThrough?: bool,
+
+  layers?: SJLayer[],
+  style?: SJStyle,
+
+  // Rotation direction is backwards compared to Sketch UI
+  isFlippedHorizontal?: bool,
+  isFlippedVertical?: bool,
+  rotation?: number,
+  shouldBreakMaskChain?: bool,
+  resizingType?: ResizingType,
+} & SJIDBase;
+
+export type SJLayer = SJTextLayer | SJGroupLayer | SJShapeGroupLayer | SJShapeLayer;
 
 export type SJTextLayer = {
   _class: 'text',
@@ -156,7 +159,7 @@ export type SJGroupLayer = {
 
 export type SJShapeGroupLayer = {
   _class: 'shapeGroup',
-  //TODO(akp): find a way to restrict this to shape layers with blowing up
+  //TODO(akp): find a way to restrict this to shape layers with blowing up, i.e.
   //layers?: SJShapeLayer[],
   style: SJStyle,
 } & _SJLayerBase;
@@ -166,14 +169,18 @@ export type SJShapeLayer = {
   _class: 'rectangle' | 'oval' | 'shapePath',
 } & SJIDBase;
 
-/*** Dumb key value coded types. Hopefully sketch will kill this off... **/
+/*** Dumb key value coded types. Hopefully sketch will kill this off at some point **/
 
+    // This is a base-64 encoded bplist, which is pretty dumb
 type EncodedBase64BinaryPlist = string;
+
+type KeyValueArchive = {
+  _archive: EncodedBase64BinaryPlist,
+};
+
+export type NSColorArchive = KeyValueArchive;
 
 export type MSAttributedString = {
   _class: 'MSAttributedString',
-  archivedAttributedString: {
-    // This is a base-64 encoded bplist, which is pretty dumb
-    _archive: EncodedBase64BinaryPlist
-  },
+  archivedAttributedString: KeyValueArchive,
 }
