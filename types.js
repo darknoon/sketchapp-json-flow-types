@@ -104,6 +104,7 @@ export type SJShadow = {|
 
 export type SJStyle = {
   _class: 'style',
+  sharedObjectID?: string,
   borderOptions?: SJBorderOptions,
   borders?: SJBorder[],
   shadows?: SJShadow[],
