@@ -195,18 +195,48 @@ type _SJLayerBase = {
   resizingType?: ResizingType,
 } & SJIDBase;
 
-export type SJLayer = SJArtboardLayer | SJTextLayer | SJGroupLayer | SJShapeGroupLayer | SJShapeLayer;
-
-export type SJArtboardLayer = {
-  _class: 'artboard',
+type _SJArtboardBase = {
   frame: SJRect,
   backgroundColor: SJColor,
   hasBackgroundColor: bool,
   horizontalRulerData?: RulerData,
   verticalRulerData?: RulerData,
   includeBackgroundColorInExport?: bool,
-  includeInCloudUpload?: bool,
+  includeInCloudUpload?: bool
 } & _SJLayerBase;
+
+export type SJLayer = SJArtboardLayer | SJTextLayer | SJGroupLayer | SJShapeGroupLayer | SJShapeLayer | SJSymbolInstanceLayer;
+
+export type SJSymbolMaster = {
+  _class: 'symbolMaster',
+  includeBackgroundColorInInstance?: bool,
+  symbolID: string
+} & _SJArtboardBase;
+
+export type SJNestedSymbolOverride = {
+  symbolID: string
+}
+
+export type SJSymbolInstanceLayer = {
+  _class: 'symbolInstance',
+  frame: SJRect,
+  horizontalSpacing: number,
+  verticalSpacing: number,
+  masterInfluenceEdgeMinXPadding?: number,
+  masterInfluenceEdgeMaxXPadding?: number,
+  masterInfluenceEdgeMinYPadding?: number,
+  masterInfluenceEdgeMaxYPadding?: number,
+  symbolID: string,
+  overrides?: {
+    '0': {
+      [objectId: string]: string | SJNestedSymbolOverride | SJImageDataReference
+    }
+  }
+} & _SJLayerBase;
+
+export type SJArtboardLayer = {
+  _class: 'artboard',
+} & _SJArtboardBase;
 
 export type SJTextLayer = {
   _class: 'text',
