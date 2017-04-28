@@ -11,8 +11,10 @@ export type SJRect = {|
   height: number,
 |};
 
+export type SJObjectId = string;
+
 type SJIDBase = {
-  do_objectID: string
+  do_objectID: SJObjectId,
 };
 
 // Rect encoded as a string, ie {{0, 0}, {10, 30}}
@@ -121,7 +123,7 @@ export type SJTextStyle = {|
     NSColor: KeyValueArchive,
     MSAttributedStringFontAttribute?: KeyValueArchive,
     NSParagraphStyle?: KeyValueArchive,
-    NSKern: number
+    NSKern: number,
   }
 |};
 
@@ -130,7 +132,7 @@ type ExportOptions = {|
     exportFormats: [],
     includedLayerIds: [],
     layerOptions: number,
-    shouldTrim: bool
+    shouldTrim: bool,
 |};
 
 type RulerData = {|
@@ -202,7 +204,7 @@ type _SJArtboardBase = {
   horizontalRulerData?: RulerData,
   verticalRulerData?: RulerData,
   includeBackgroundColorInExport?: bool,
-  includeInCloudUpload?: bool
+  includeInCloudUpload?: bool,
 } & _SJLayerBase;
 
 export type SJLayer = SJArtboardLayer | SJTextLayer | SJGroupLayer | SJShapeGroupLayer | SJShapeLayer | SJSymbolInstanceLayer;
@@ -210,11 +212,11 @@ export type SJLayer = SJArtboardLayer | SJTextLayer | SJGroupLayer | SJShapeGrou
 export type SJSymbolMaster = {
   _class: 'symbolMaster',
   includeBackgroundColorInInstance?: bool,
-  symbolID: string
+  symbolID: SJObjectId,
 } & _SJArtboardBase;
 
 export type SJNestedSymbolOverride = {
-  symbolID: string
+  symbolID: SJObjectId,
 }
 
 export type SJSymbolInstanceLayer = {
@@ -226,12 +228,12 @@ export type SJSymbolInstanceLayer = {
   masterInfluenceEdgeMaxXPadding?: number,
   masterInfluenceEdgeMinYPadding?: number,
   masterInfluenceEdgeMaxYPadding?: number,
-  symbolID: string,
+  symbolID: SJObjectId,
   overrides?: {
     '0': {
-      [objectId: string]: string | SJNestedSymbolOverride | SJImageDataReference
-    }
-  }
+      [objectId: SJObjectId]: string | SJNestedSymbolOverride | SJImageDataReference,
+    },
+  },
 } & _SJLayerBase;
 
 export type SJArtboardLayer = {
