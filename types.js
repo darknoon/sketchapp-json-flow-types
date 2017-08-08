@@ -90,7 +90,7 @@ export type SJFill = {|
 |};
 
 export type SJShadow = {|
-  _class: 'shadow',
+  _class: 'shadow' | 'innerShadow',
   isEnabled: bool,
   blurRadius: number,
   color: SJColor,
@@ -110,6 +110,7 @@ export type SJStyle = {
   borderOptions?: SJBorderOptions,
   borders?: SJBorder[],
   shadows?: SJShadow[],
+  innerShadows?: SJShadow[],
   fills?: SJFill[],
   textStyle?: SJTextStyle,
   miterLimit: number,
