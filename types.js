@@ -231,9 +231,7 @@ export type SJSymbolInstanceLayer = {
   masterInfluenceEdgeMaxYPadding?: number,
   symbolID: SJObjectId,
   overrides?: {
-    '0': {
-      [objectId: SJObjectId]: string | SJNestedSymbolOverride | SJImageDataReference,
-    },
+    [objectId: SJObjectId]: string | SJNestedSymbolOverride | SJImageDataReference,
   },
 } & _SJLayerBase;
 
