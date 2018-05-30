@@ -176,6 +176,12 @@ export type SJPath = {|
 
 /*** Layers ***/
 
+type SJFlow = {
+  _class: 'MSImmutableFlowConnection',
+  animationType: number,
+  destinationArtboardID?: SJObjectId | 'back'
+}
+
 type _SJLayerBase = {
   // Layers have names; when they are not fixed, they are changed by the layer's string
   name: string,
@@ -196,6 +202,8 @@ type _SJLayerBase = {
   rotation?: number,
   shouldBreakMaskChain?: bool,
   resizingType?: ResizingType,
+
+  flow: SJFlow,
 } & SJIDBase;
 
 type _SJArtboardBase = {
@@ -206,6 +214,7 @@ type _SJArtboardBase = {
   verticalRulerData?: RulerData,
   includeBackgroundColorInExport?: bool,
   includeInCloudUpload?: bool,
+  isFlowHome?: bool,
 } & _SJLayerBase;
 
 export type SJLayer = SJArtboardLayer | SJTextLayer | SJGroupLayer | SJShapeGroupLayer | SJShapeLayer | SJSymbolInstanceLayer;

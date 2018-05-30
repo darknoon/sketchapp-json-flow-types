@@ -1,6 +1,6 @@
 {
   "name": "sketchapp-json-flow-types",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Flow types describing Sketch v43's JSON internal structures",
   "main": "types.js",
   "repository": "https://github.com/darknoon/sketchapp-json-flow-types",
