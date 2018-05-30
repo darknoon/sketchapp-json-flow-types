@@ -203,7 +203,7 @@ type _SJLayerBase = {
   shouldBreakMaskChain?: bool,
   resizingType?: ResizingType,
 
-  flow: SJFlow,
+  flow?: SJFlow,
 } & SJIDBase;
 
 type _SJArtboardBase = {
