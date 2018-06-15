@@ -33,6 +33,10 @@ export type SJColor = {|
 // You'll want to use values from sketch-constants for these.
 // This just prevents some mistakes.
 // $Values will make these unnecessary https://github.com/facebook/flow/issues/627
+type TextDecorationUnderlineEnum = 0 | 1 | 9;
+type StrikeThroughEnum = 0 | 1;
+type TextAlignmentEnum = 0 | 1 | 2 | 3;
+type TextTransformEnum = 0 | 1 | 2;
 type BorderPositionEnum = 0 | 1 | 2 | 3;
 type BorderLineCapStyle = 0 | 1 | 2;
 type BorderLineJoinStyle = 0 | 1 | 2;
@@ -118,6 +122,29 @@ export type SJStyle = {
   endDecorationType: LineDecorationTypeEnum,
 }
 
+type TextStyleAttributes = {
+  underlineStyle: TextDecorationUnderlineEnum,
+  strikethroughStyle: StrikeThroughEnum,
+  paragraphStyle: {
+    _class: 'paragraphStyle',
+    alignment: TextAlignmentEnum,
+    minimumLineHeight?: number,
+    maximumLineHeight?: number,
+    lineHeightMultiple?: number,
+    kerning?: number,
+    MSAttributedStringTextTransformAttribute?: TextTransformEnum,
+    MSAttributedStringFontAttribute?: {
+      _class: 'fontDescriptor',
+      attributes: {
+        name: string,
+        size: number,
+      },
+    },
+    textStyleVerticalAlignmentKey?: number,
+    MSAttributedStringColorAttribute?: SJColor,
+  }
+}
+
 export type SJTextStyle = {|
   _class: 'textStyle',
   encodedAttributes: {
@@ -125,7 +152,7 @@ export type SJTextStyle = {|
     MSAttributedStringFontAttribute?: KeyValueArchive,
     NSParagraphStyle?: KeyValueArchive,
     NSKern: number,
-  }
+  } | TextStyleAttributes
 |};
 
 type ExportOptions = {|
@@ -287,4 +314,13 @@ export type NSColorArchive = KeyValueArchive;
 export type MSAttributedString = {
   _class: 'MSAttributedString',
   archivedAttributedString: KeyValueArchive,
-}
+} | {|
+  _class: 'attributedString',
+  string: string,
+  attributes: {
+    _class: 'stringAttribute',
+    location: number,
+    length: number,
+    attributes: TextStyleAttributes,
+  }[],
+|}
