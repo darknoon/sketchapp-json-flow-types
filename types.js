@@ -256,6 +256,12 @@ export type SJNestedSymbolOverride = {
   symbolID: SJObjectId,
 }
 
+export type SJSymbolOverride = {
+  _class: 'overrideValue',
+  overrideName: string,
+  value: string | SJImageDataReference,
+} & SJIDBase
+
 export type SJSymbolInstanceLayer = {
   _class: 'symbolInstance',
   frame: SJRect,
@@ -269,6 +275,7 @@ export type SJSymbolInstanceLayer = {
   overrides?: {
     [objectId: SJObjectId]: string | SJNestedSymbolOverride | SJImageDataReference,
   },
+  overrideValues?: SJSymbolOverride[]
 } & _SJLayerBase;
 
 export type SJArtboardLayer = {
