@@ -45,7 +45,7 @@ type PatternFillTypeEnum = 0 | 1 | 2 | 3;
 type BlendModeEnum = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15;
 type LineDecorationTypeEnum = 0 | 1 | 2 | 3;
 type BooleanOperation = -1 | 0 | 1 | 2 | 3;
-type CurveMode = 0 | 1 | 2 | 3 | 4;
+export type SJCurveMode = 0 | 1 | 2 | 3 | 4;
 /*
 const ResizingType = {
   Stretch: 0,
@@ -184,11 +184,11 @@ export type SJImageDataReference = {|
 // '{0, 1}'
 type PointString = string;
 
-type SJCurvePoint = {|
+export type SJCurvePoint = {|
   _class: 'curvePoint',
   cornerRadius: number,
   curveFrom: PointString,
-  curveMode: CurveMode,
+  curveMode: SJCurveMode,
   curveTo: PointString,
   hasCurveFrom: bool,
   hasCurveTo: bool,
